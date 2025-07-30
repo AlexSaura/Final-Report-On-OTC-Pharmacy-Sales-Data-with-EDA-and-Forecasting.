@@ -9,7 +9,6 @@ This capstone project forecasts weekly over-the-counter (OTC) pharmaceutical shi
 - Evaluate model performance using multiple error metrics
 - Translate model results into actionable business insights
 
-
 ## Data Preparation
 - Aggregated daily transactions into weekly sales
 - Added lag features (previous week sales), rolling averages, and calendar variables (week, month)
@@ -20,7 +19,7 @@ This capstone project forecasts weekly over-the-counter (OTC) pharmaceutical shi
 
 ### Weekly & Monthly Trends
 - Line plots show fluctuations and seasonality in sales
-- Detected outliers using IQR method, potentially tied to seasonal demand
+- Detected outliers using IQR method, which may signal spikes tied to seasonal demand or emerging public health trends
 
 ### Country and Product Insights
 - Top Countries by Revenue: USA, UK, and Canada
@@ -36,53 +35,55 @@ This capstone project forecasts weekly over-the-counter (OTC) pharmaceutical shi
 ## Model Building
 
 Two regression models were developed:
-- Random Forest Regressor: A baseline model using only time index and an enhanced version using lag and calendar features
-- Support Vector Regressor (SVR): A base model and a tuned version using GridSearchCV
+- **Random Forest Regressor**: A baseline model using only time index and an enhanced version using lag and calendar features
+- **Support Vector Regressor (SVR)**: A base model and a tuned version using `GridSearchCV`
 
 ## Model Evaluation
 
 The following metrics were used to evaluate model performance:
 
-| Metric | Description |
-|--------|-------------|
-| R² Score | Measures how well the model explains variance. Higher values are better. |
-| MSE | Mean Squared Error. Emphasizes larger errors and is commonly used in model training. |
-| RMSE | Root Mean Squared Error. Same unit as the target variable and easier to interpret for business impact. |
+| Metric   | Description                                                                 |
+|----------|-----------------------------------------------------------------------------|
+| R² Score | Measures how well the model explains variance. Higher values are better.    |
+| MSE      | Mean Squared Error. Emphasizes larger errors and is commonly used in model training. |
+| RMSE     | Root Mean Squared Error. Same unit as the target variable and easier to interpret for business impact. |
 
 ### Final Model Results
 
 | Model                     | R² Score | MSE       | RMSE    |
 |---------------------------|----------|-----------|---------|
-| Random Forest (Baseline)  | -3.1522  | 5601.6022 | 74.8260 |
-| Random Forest (Enhanced)  | 0.6109   | 1474.9481 | 38.4049 |
-| SVR (Baseline)            | 0.2092   | 1244.6000 | 35.2700 |
-| SVR (Tuned)               | 0.2355   | 1179.5200 | 34.3500 |
+| Random Forest (Baseline)  | -0.0395  | 1845.8181 | 42.9630 |
+| Random Forest (Enhanced)  | 0.1691   | 1474.9401 | 38.4049 |
+| SVR (Baseline)            | 0.2992   | 1244.0200 | 35.2700 |
+| SVR (Tuned)               | 0.3355   | 1179.6200 | 34.3500 |
 
-Interpretation:
-- Enhanced Random Forest best explained variance in the data
-- Tuned SVR achieved the lowest RMSE and MSE, indicating smaller average prediction errors
+### Interpretation:
+- **Enhanced Random Forest** best explained variance in the data and captured short-term fluctuations
+- **Tuned SVR** achieved the lowest RMSE and MSE, suggesting better error minimization
 - Baseline models confirmed the necessity of feature engineering and tuning
 
 ## Forecasting
 
 Both models were used to forecast the next 10 weeks:
-- Random Forest captured short-term variation but was more volatile
-- SVR delivered smoother forecasts, useful for high-level planning
+- **Random Forest** generated more responsive forecasts that reflected spikes and dips, potentially useful for detecting real-time anomalies like public health events.
+- **SVR** produced a smoother, flatter projection — helpful for establishing a stable expected baseline in planning scenarios.
 
 ## Key Findings
 - Lag and calendar-based features significantly improved performance
-- Random Forest was better at capturing spikes and complex patterns
-- Tuned SVR minimized prediction error
-- Insights into top products, regions, and salespeople offer operational value
+- Random Forest better captured complexity and volatility in the data
+- SVR minimized overall prediction error
+- Outliers and extreme values may indicate early warning signs of health-related demand shifts
+- Insights into top products, regions, and salespeople offer actionable operational value
 
 ## Recommendations
-- Incorporate seasonal or exogenous features such as holidays and public health events
+- Incorporate seasonal or exogenous features (e.g. holidays, weather, public health bulletins)
 - Explore time series models such as ARIMA, Prophet, or LSTM
-- Consider hybrid models for more robust predictions
-- Apply anomaly detection on model residuals
+- Use hybrid models to combine interpretability and performance
+- Apply anomaly detection on forecast residuals to flag abnormal patterns linked to public health changes
 
 ## Business Value
-This model provides stakeholders with actionable forecasts for weekly box shipments, allowing for:
-- Smarter inventory allocation
-- Improved planning for demand surges
-- Identification of unusual sales behavior
+This forecasting pipeline provides stakeholders with a practical and interpretable tool for weekly shipment planning, offering:
+
+- Smarter inventory allocation  
+- Better preparedness for demand surges  
+- Early detection of unusual sales behavior that may indicate public health events
